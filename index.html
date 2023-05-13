@@ -28,6 +28,11 @@ $(function() {
 	$('input#copy_to_clipboard').on('click', function(){
 		navigator.clipboard.writeText($('div#hashed').text());
 	});
+	$('input#to_hash').on('keypress', function(e){
+		if(e.which == 13) {
+			$('input#hash_now').trigger('click');
+		}
+	});
 });
 </script>
 <div>
