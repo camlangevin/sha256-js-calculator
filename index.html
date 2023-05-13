@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!--<script src="sha256.js"></script>-->
+<style>
+div {
+	display: block;
+	text-align: center;
+	width: 100%;
+}
+</style>
+<script>
+const getSHA256Hash = async (input) => {
+  const textAsBuffer = new TextEncoder().encode(input);
+  const hashBuffer = await window.crypto.subtle.digest("SHA-256", textAsBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hash = hashArray
+    .map((item) => item.toString(16).padStart(2, "0"))
+    .join("");
+  return hash;
+};
+
+$(function() {
+	$('input#hash_now').on("click", async function(){
+		$('div#hashed').text(await getSHA256Hash($('input#to_hash').val()));
+		$('input#copy_to_clipboard').prop('disabled', false);
+	});
+	$('input#copy_to_clipboard').on('click', function(){
+		navigator.clipboard.writeText($('div#hashed').text());
+	});
+});
+</script>
+<div>
+<input type="text" id="to_hash">
+</div>
+
+<div><input type="button" id="hash_now" value="generate sha256 hash"/></div>
+
+<div id="hashed">...</div>
+
+<div><input type="button" id="copy_to_clipboard" value="Copy hash to clipboard" disabled/></div>
