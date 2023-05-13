@@ -22,7 +22,7 @@ const getSHA256Hash = async (input) => {
 
 $(function() {
 	$('input#hash_now').on("click", async function(){
-		$('div#hashed').text(await getSHA256Hash($('input#to_hash').val()));
+		$('div#hashed').text(await getSHA256Hash($('input#to_hash').val().trim()));
 		$('input#copy_to_clipboard').prop('disabled', false);
 	});
 	$('input#copy_to_clipboard').on('click', function(){
